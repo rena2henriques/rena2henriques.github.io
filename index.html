@@ -2,22 +2,211 @@
 <html lang="pt">
 <head>
   <meta charset="UTF-8">
-  <title>Prof. Renato</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portal TIC – Prof. Renato</title>
+
   <style>
-    body { font-family: sans-serif; text-align: center; margin-top: 60px; }
-    a { display: block; margin: 15px auto; width: 220px;
-        padding: 15px; background: #2c7be5; color: white;
-        text-decoration: none; border-radius: 8px; }
-    a:hover { background: #1a5dcc; }
+    :root {
+      --bg-main: radial-gradient(circle at top, #1f2933, #0b0f14);
+      --bg-card: linear-gradient(145deg, #111827, #0b1220);
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+    }
+
+    body.light {
+      --bg-main: linear-gradient(135deg, #f5f7fa, #e5eaf2);
+      --bg-card: #ffffff;
+      --text-main: #111827;
+      --text-muted: #4b5563;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg-main);
+      color: var(--text-main);
+      min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    header {
+      text-align: center;
+      padding: 50px 20px 20px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 3.0rem;
+    }
+
+    header p {
+      margin-top: 10px;
+      color: var(--text-muted);
+    }
+
+    .toggle {
+      margin-top: 20px;
+    }
+
+    .toggle button {
+      background: none;
+      border: 1px solid var(--text-muted);
+      color: var(--text-main);
+      padding: 8px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    .grid {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 30px 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+    }
+
+    a.card {
+      position: relative;
+      padding: 26px 22px;
+      background: var(--bg-card);
+      border-radius: 14px;
+      text-decoration: none;
+      color: var(--text-main);
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.05),
+                  0 15px 30px rgba(0,0,0,0.15);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+
+    a.card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 0 1px rgba(var(--accent), 0.5),
+                  0 25px 50px rgba(0,0,0,0.25);
+    }
+
+    .card span {
+      display: block;
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      margin-bottom: 8px;
+      color: rgb(var(--accent));
+    }
+
+    .card strong {
+      font-size: 1.35rem;
+      font-weight: 600;
+    }
+
+    .icon {
+      width: 36px;
+      height: 36px;
+      margin-bottom: 14px;
+      stroke: rgb(var(--accent));
+      stroke-width: 1.7;
+      fill: none;
+    }
+
+    /* cores por ano */
+    .ano5 { --accent: 59,130,246; }
+    .ano6 { --accent: 34,197,94; }
+    .ano8 { --accent: 239,68,68; }
+    .ano9 { --accent: 168,85,247; }
+    .extras { --accent: 251,191,36; }
+    .ano10 { --accent: 14,165,233; } /* azul tech */
+
+    footer {
+      text-align: center;
+      padding: 30px 10px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
   </style>
 </head>
+
 <body>
-  <h1>Área do Aluno</h1>
-  <a href="https://sites.google.com/view/espan-tic-5ano" target="_blank">5.º Ano</a>
-  <a href="https://sites.google.com/view/espan-tic-6ano" target="_blank">6.º Ano</a>
-  <a href="https://sites.google.com/view/espan-tic-8ano" target="_blank">8.º Ano</a>
-  <a href="https://sites.google.com/view/espan-tic-9ano" target="_blank">9.º Ano</a>
-  <a href="https://sites.google.com/view/tic10o-r" target="_blank">TIC 10º ano</a>
-  <a href="https://sites.google.com/view/si-10q" target="_blank">SI 10º ano</a>
+  <header>
+    <h1>Portal TIC</h1>
+    <p>Prof. Renato · Acesso aos conteúdos digitais</p>
+
+    <div class="toggle">
+      <button onclick="toggleTheme()">🌙 / ☀️</button>
+    </div>
+  </header>
+
+  <main class="grid">
+    <a class="card ano5" href="https://sites.google.com/view/espan-tic-5ano" target="_blank">
+      <svg class="icon" viewBox="0 0 24 24">
+        <rect x="3" y="4" width="18" height="14" rx="2"/>
+        <path d="M8 20h8"/>
+      </svg>
+      <span>ENSINO BÁSICO</span>
+      <strong>5.º Ano</strong>
+    </a>
+
+    <a class="card ano6" href="https://sites.google.com/v" target="_blank">
+      <svg class="icon" viewBox="0 0 24 24">
+        <path d="M3 6l9-4 9 4v12l-9 4-9-4z"/>
+        <path d="M12 22V10"/>
+      </svg>
+      <span>ENSINO BÁSICO</span>
+      <strong>6.º Ano</strong>
+    </a>
+
+    <a class="card ano8" href="https://sites.google.com/view/espan-tic-8ano" target="_blank">
+      <svg class="icon" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M12 7v5l3 3"/>
+      </svg>
+      <span>3.º CICLO</span>
+      <strong>8.º Ano</strong>
+    </a>
+
+    <a class="card ano9" href="https://sites.google.com/view/espan-tic-9ano" target="_blank">
+      <svg class="icon" viewBox="0 0 24 24">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M12 7v5l3 3"/>
+      </svg>
+      <span>3.º CICLO</span>
+      <strong>9.º Ano</strong>
+    </a>
+
+    <a class="card extras" href="https://sites.google.com/view/tic10o-r" target="_blank">
+      <svg class="icon" viewBox="0 0 24 24">
+        <path d="M12 2l3 7h7l-5.5 4.5L18 22l-6-4-6 4 1.5-8.5L2 9h7z"/>
+      </svg>
+      <span>Ensino Profissional</span>
+      <strong>TIC 10.º ano</strong>
+    </a>
+
+    <a class="card ano10" href="https://sites.google.com/view/si-10q" target="_blank">
+      <svg class="icon" viewBox="0 0 24 24">
+        <rect x="3" y="4" width="18" height="12" rx="2"/>
+        <path d="M8 20h8"/>
+        <path d="M12 16v4"/>
+      </svg>
+      <span>Ensino Profissional</span>
+      <strong>SI 10.º ano</strong>
+    </a>
+  </main>
+
+  <footer>
+    © Renato Henriques · Professor de Informática
+  </footer>
+
+  <script>
+    const body = document.body;
+    const savedTheme = localStorage.getItem("theme");
+
+    if (savedTheme === "light") body.classList.add("light");
+
+    function toggleTheme() {
+      body.classList.toggle("light");
+      localStorage.setItem(
+        "theme",
+        body.classList.contains("light") ? "light" : "dark"
+      );
+    }
+  </script>
 </body>
 </html>
