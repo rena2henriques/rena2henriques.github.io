@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submissão de Trabalhos – Portal TIC</title>
+
+  <style>
+    :root {
+      --bg-main: radial-gradient(circle at top, #1f2933, #0b0f14);
+      --bg-card: linear-gradient(145deg, #111827, #0b1220);
+      --bg-solid: #111827;
+      --text-main: #e5e7eb;
+      --text-muted: #9ca3af;
+      --accent: 14,165,233;
+    }
+
+    body.light {
+      --bg-main: linear-gradient(135deg, #f5f7fa, #e5eaf2);
+      --bg-card: #ffffff;
+      --bg-solid: #ffffff;
+      --text-main: #111827;
+      --text-muted: #4b5563;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg-main);
+      color: var(--text-main);
+      min-height: 100vh;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    header {
+      text-align: center;
+      padding: 50px 20px 10px;
+    }
+
+    header p {
+      margin-top: 8px;
+      color: var(--text-muted);
+    }
+
+    a.voltar {
+      display: inline-block;
+      margin-top: 18px;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      border: 1px solid rgba(148,163,184,0.3);
+      padding: 6px 14px;
+      border-radius: 20px;
+    }
+
+    a.voltar:hover {
+      color: var(--text-main);
+      border-color: rgba(148,163,184,0.6);
+    }
+
+    main {
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 20px 20px 60px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 0 0 1px rgba(0,0,0,0.05), 0 20px 40px rgba(0,0,0,0.2);
+    }
+
+    label {
+      display: block;
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      margin: 18px 0 6px;
+    }
+
+    label:first-child { margin-top: 0; }
+
+    input[type="text"], select {
+      width: 100%;
+      padding: 11px 13px;
+      border-radius: 10px;
+      border: 1px solid rgba(148,163,184,0.3);
+      background: rgba(148,163,184,0.08);
+      color: var(--text-main);
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    input[type="text"]:focus, select:focus {
+      border-color: rgb(var(--accent));
+    }
+
+    select {
+      appearance: none;
+      cursor: pointer;
+    }
+
+    select option {
+      background: var(--bg-solid);
+      color: var(--text-main);
+    }
+
+    .dropzone {
+      margin-top: 8px;
+      border: 2px dashed rgba(148,163,184,0.4);
+      border-radius: 12px;
+      padding: 30px 16px;
+      text-align: center;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .dropzone.dragover {
+      border-color: rgb(var(--accent));
+      background: rgba(var(--accent), 0.08);
+      color: var(--text-main);
+    }
+
+    .dropzone strong {
+      color: rgb(var(--accent));
+    }
+
+    #fileInput { display: none; }
+
+    .file-list {
+      margin-top: 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(148,163,184,0.08);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 0.85rem;
+    }
+
+    .file-item button {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    .file-item button:hover {
+      color: #ef4444;
+    }
+
+    .submit-btn {
+      margin-top: 24px;
+      width: 100%;
+      padding: 13px;
+      border-radius: 10px;
+      border: none;
+      background: rgb(var(--accent));
+      color: #fff;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.2s ease;
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .status {
+      margin-top: 16px;
+      font-size: 0.88rem;
+      text-align: center;
+      min-height: 1.2em;
+    }
+
+    .status.success { color: #22c55e; }
+    .status.error { color: #ef4444; }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1 style="font-size:1.8rem; margin:0;">📤 Submissão de Trabalhos</h1>
+    <p>Identifica-te e envia os teus ficheiros</p>
+    <a class="voltar" href="index.html">← Voltar ao Portal</a>
+  </header>
+
+  <main>
+    <div class="card">
+      <form id="submitForm">
+        <label for="nome">Nome do aluno</label>
+        <input type="text" id="nome" required placeholder="Nome completo">
+
+        <label for="disciplina">Disciplina</label>
+        <select id="disciplina" required>
+          <option value="" disabled selected>Seleciona a disciplina</option>
+          <option value="TIC - 5º Ano">TIC - 5º Ano</option>
+          <option value="TIC - 6º Ano">TIC - 6º Ano</option>
+          <option value="Tecnologias Web e Programação (TWP) - 10º Ano">Tecnologias Web e Programação (TWP) - 10º Ano</option>
+          <option value="Tecnologias Informáticas (TI) - 11º Ano">Tecnologias Informáticas (TI) - 11º Ano</option>
+          <option value="Aplicações Informáticas (AIB) - 12º Ano">Aplicações Informáticas (AIB) - 12º Ano</option>
+        </select>
+
+        <label for="turma">Turma</label>
+        <input type="text" id="turma" required placeholder="Ex: 9ºC">
+
+        <label>Ficheiros</label>
+        <div class="dropzone" id="dropzone">
+          <strong>Clica aqui</strong> ou arrasta os ficheiros para esta área
+        </div>
+        <input type="file" id="fileInput" multiple>
+        <div class="file-list" id="fileList"></div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">Enviar trabalho</button>
+        <div class="status" id="status"></div>
+      </form>
+    </div>
+  </main>
+
+  <script>
+    // ===================== CONFIGURAÇÃO =====================
+    // Cola aqui o URL do teu Web App depois de o publicares no Apps Script
+    const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyJbo8WjYcpqa9eBeHchgA8lJbGZhkyD4Js9B9z8vV6yciD-aKnuOx9e2doBEzbzz-RYw/exec";
+
+    // Tem de ser EXATAMENTE igual à SECRET_TOKEN que puseste no Code.gs
+    const SECRET_TOKEN = "aura67";
+    // ==========================================================
+
+    const body = document.body;
+    if (localStorage.getItem("theme") === "light") body.classList.add("light");
+
+    const dropzone = document.getElementById("dropzone");
+    const fileInput = document.getElementById("fileInput");
+    const fileList = document.getElementById("fileList");
+    const form = document.getElementById("submitForm");
+    const submitBtn = document.getElementById("submitBtn");
+    const status = document.getElementById("status");
+
+    const MAX_TOTAL_BYTES = 25 * 1024 * 1024; // 25 MB
+    let selectedFiles = [];
+
+    function totalSize(files) {
+      return files.reduce((sum, f) => sum + f.size, 0);
+    }
+
+    function formatSize(bytes) {
+      return (bytes / (1024 * 1024)).toFixed(1) + " MB";
+    }
+
+    dropzone.addEventListener("click", () => fileInput.click());
+
+    dropzone.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      dropzone.classList.add("dragover");
+    });
+
+    dropzone.addEventListener("dragleave", () => {
+      dropzone.classList.remove("dragover");
+    });
+
+    dropzone.addEventListener("drop", (e) => {
+      e.preventDefault();
+      dropzone.classList.remove("dragover");
+      addFiles(e.dataTransfer.files);
+    });
+
+    fileInput.addEventListener("change", () => {
+      addFiles(fileInput.files);
+      fileInput.value = "";
+    });
+
+    function addFiles(fileListObj) {
+      const incoming = Array.from(fileListObj);
+      const prospectiveTotal = totalSize(selectedFiles) + totalSize(incoming);
+
+      if (prospectiveTotal > MAX_TOTAL_BYTES) {
+        status.textContent = `❌ O total dos ficheiros (${formatSize(prospectiveTotal)}) excede o limite de 25 MB por submissão.`;
+        status.className = "status error";
+        return;
+      }
+
+      incoming.forEach((file) => selectedFiles.push(file));
+      status.textContent = "";
+      status.className = "status";
+      renderFileList();
+    }
+
+    function removeFile(index) {
+      selectedFiles.splice(index, 1);
+      renderFileList();
+    }
+
+    function renderFileList() {
+      fileList.innerHTML = "";
+      selectedFiles.forEach((file, index) => {
+        const item = document.createElement("div");
+        item.className = "file-item";
+        item.innerHTML = `<span>${file.name} <span style="color:var(--text-muted)">(${formatSize(file.size)})</span></span>`;
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.textContent = "✕";
+        btn.onclick = () => removeFile(index);
+        item.appendChild(btn);
+        fileList.appendChild(item);
+      });
+
+      if (selectedFiles.length > 0) {
+        const totalItem = document.createElement("div");
+        totalItem.style.cssText = "font-size:0.8rem; color:var(--text-muted); text-align:right; margin-top:4px;";
+        totalItem.textContent = `Total: ${formatSize(totalSize(selectedFiles))} / 25 MB`;
+        fileList.appendChild(totalItem);
+      }
+    }
+
+    function fileToBase64(file) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(",")[1]);
+        reader.onerror = reject;
+        reader.readAsDataURL(file);
+      });
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      status.textContent = "";
+      status.className = "status";
+
+      if (selectedFiles.length === 0) {
+        status.textContent = "Seleciona pelo menos um ficheiro.";
+        status.classList.add("error");
+        return;
+      }
+
+      if (totalSize(selectedFiles) > MAX_TOTAL_BYTES) {
+        status.textContent = `❌ O total dos ficheiros (${formatSize(totalSize(selectedFiles))}) excede o limite de 25 MB.`;
+        status.classList.add("error");
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = "A enviar...";
+
+      try {
+        const filesPayload = await Promise.all(
+          selectedFiles.map(async (file) => ({
+            filename: file.name,
+            mimeType: file.type || "application/octet-stream",
+            data: await fileToBase64(file)
+          }))
+        );
+
+        const payload = {
+          token: SECRET_TOKEN,
+          nome: document.getElementById("nome").value,
+          disciplina: document.getElementById("disciplina").value,
+          turma: document.getElementById("turma").value,
+          files: filesPayload
+        };
+
+        const response = await fetch(SCRIPT_URL, {
+          method: "POST",
+          headers: { "Content-Type": "text/plain;charset=utf-8" },
+          body: JSON.stringify(payload)
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          status.textContent = "✅ Trabalho enviado com sucesso!";
+          status.classList.add("success");
+          form.reset();
+          selectedFiles = [];
+          renderFileList();
+        } else {
+          throw new Error(result.error || "Erro desconhecido.");
+        }
+      } catch (err) {
+        status.textContent = "❌ Erro ao enviar: " + err.message;
+        status.classList.add("error");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Enviar trabalho";
+      }
+    });
+  </script>
+</body>
+</html>
