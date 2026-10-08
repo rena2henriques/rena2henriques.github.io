@@ -196,13 +196,13 @@
   <header>
     <h1 style="font-size:1.8rem; margin:0;">📤 Submissão de Trabalhos</h1>
     <p>Identifica-te e envia os teus ficheiros</p>
-    <a class="voltar" href="index.html">← Voltar ao Portal</a>
+    <a class="voltar" href="index.html" target="_top">← Voltar ao Portal</a>
   </header>
 
   <main>
     <div class="card">
       <form id="submitForm">
-        <label for="nome">Nome do aluno</label>
+        <label for="nome">Nome do aluno/elementos do grupo</label>
         <input type="text" id="nome" required placeholder="Nome completo">
 
         <label for="disciplina">Disciplina</label>
@@ -216,7 +216,22 @@
         </select>
 
         <label for="turma">Turma</label>
-        <input type="text" id="turma" required placeholder="Ex: 9ºC">
+        <select id="turma" required>
+          <option value="" disabled selected>Seleciona a turma</option>
+          <option value="5ºC">5ºC</option>
+          <option value="5ºD">5ºD</option>
+          <option value="5ºE">5ºE</option>
+          <option value="5ºF">5ºF</option>
+          <option value="5ºG">5ºG</option>
+          <option value="5ºH">5ºH</option>
+          <option value="6ºE">6ºE</option>
+          <option value="6ºF">6ºF</option>
+          <option value="6ºG">6ºG</option>
+          <option value="6ºH">6ºH</option>
+          <option value="10ºU">10ºU</option>
+          <option value="11ºQ">11ºQ</option>
+          <option value="12ºA-D">12ºA-D</option>
+        </select>
 
         <label>Ficheiros</label>
         <div class="dropzone" id="dropzone">
@@ -309,7 +324,13 @@
       selectedFiles.forEach((file, index) => {
         const item = document.createElement("div");
         item.className = "file-item";
-        item.innerHTML = `<span>${file.name} <span style="color:var(--text-muted)">(${formatSize(file.size)})</span></span>`;
+        const label = document.createElement("span");
+        label.textContent = file.name + " ";
+        const size = document.createElement("span");
+        size.style.color = "var(--text-muted)";
+        size.textContent = `(${formatSize(file.size)})`;
+        label.appendChild(size);
+        item.appendChild(label);
         const btn = document.createElement("button");
         btn.type = "button";
         btn.textContent = "✕";
